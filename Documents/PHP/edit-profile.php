@@ -5,6 +5,7 @@
 #Date: 2022-02-27
 ################################################################################## -->
 <?php
+ob_start();
 session_start();
 require_once "../../Database/config.php";
 
@@ -32,6 +33,10 @@ $result = $link->query("SELECT * FROM `Accounts` WHERE ACC_ID ='$id'");
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <link rel="apple-touch-icon" sizes="180x180" href="../../Images/Favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../../Images/Favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../../Images/Favicon/favicon-16x16.png">
+  <link rel="manifest" href="../../Images/Favicon/site.webmanifest">
   <link rel="script" href="../JS/button-script.js">
   <link rel="stylesheet" href="../CSS/boot-strap.css ">
   <link rel="stylesheet" href="../CSS/styles.css ">
@@ -40,7 +45,7 @@ $result = $link->query("SELECT * FROM `Accounts` WHERE ACC_ID ='$id'");
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>318 Nutrition | ADMIN PANEL</title>
+  <title>318 Nutrition | Edit Profile</title>
 </head>
 <body>
   <nav class="navbar">
@@ -53,13 +58,14 @@ $result = $link->query("SELECT * FROM `Accounts` WHERE ACC_ID ='$id'");
     <div class="navbar-links">
       <ul>
         <li><a href="../../Documents/PHP/index.php">HOME</a></li>
-        <li><a href="#">ABOUT 318</a></li>
+        <li><a href="../PHP/about.php">ABOUT 318</a></li>
       <div class="dropdown">
-        <li><a class="dropbtn" href="#">PROGRAMS</a></li>
+        <li><a class="dropbtn" href="../../Documents/PHP/programs.php">PROGRAMS</a></li>
         <div class="dropdown-content">
-      <a href="#">Link 1</a>
-      <a href="# ">Link 2</a>
-      <a href="#">Link 3</a>
+      <a href="#">Monthly Packages</a>
+      <a href="# ">Couples Nutrition</a>
+      <a href="#">Adolescent Nutrition</a>
+      <a href="#">Workshops/Seminars</a>
     </div>
     </div>
     <div class="dropdown">
@@ -69,7 +75,7 @@ $result = $link->query("SELECT * FROM `Accounts` WHERE ACC_ID ='$id'");
     </div>
     </div>
         <div class="contact">
-          <li><a href="#">CONTACT</a></li>
+          <li><a href="../PHP/contact.php">CONTACT</a></li>
         </div>
       </ul>
     </div>
@@ -114,7 +120,7 @@ $result = $link->query("SELECT * FROM `Accounts` WHERE ACC_ID ='$id'");
             <div class="form-group">
                 <input type="submit" name="submit" class="btn btn-primary" value="Change">
                 <input type="reset" class="btn btn-secondary ml-2" value="Revert">
-								<a href="../Admin Panel/reset-password.php" class="btn btn-danger">Change Password</a>
+								<a href="../PHP/reset-password.php" class="btn btn-danger">Change Password</a>
             </div>
         </form>
 				</div>		
@@ -123,7 +129,7 @@ $result = $link->query("SELECT * FROM `Accounts` WHERE ACC_ID ='$id'");
 <footer>
   <div class="footer">
     <div class="button-format">
-    <a href="#">CONTACT ME</a>
+    <a href="../PHP/contact.php">CONTACT ME</a>
     </div>
     <br>
   <p>Copyright © 318 Nutrition<br></p>
@@ -147,12 +153,12 @@ if(isset($_POST['submit']))
     $result = $link->query("UPDATE Accounts SET FName='$new_fname', LName='$new_lname', Phone='$new_phone', Email='$new_email' WHERE ACC_ID='$tw'");
     if ($_SESSION["Employee"] == true)
     {
-      header("location: ../../../Admin Panel/admin-panel.php");
+      header("location: ../PHP/admin-panel.php");
       exit;
     }
     else if ($_SESSION["Employee"] == false)
     {
-      header("location: ../../../PHP Scripts/Home.php");
+      header("location: ../PHP/user-panel.php");
       exit;
     }
 }

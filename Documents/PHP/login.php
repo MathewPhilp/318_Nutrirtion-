@@ -16,11 +16,6 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true)
     header("location: ../../Documents/PHP/admin-panel.php");
     exit;
     }
-    else if ($_SESSION["Employee"] == false)
-    {
-        header("location: ../../Documents/PHP/login.php");
-        exit;
-    }
 }
 
 require_once "../../Database/config.php";
@@ -56,7 +51,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
     if(empty($username_err) && empty($password_err))
     {
         // Prepare a select statement
-        $sql = "SELECT ACC_ID, Employee, FName, LName, Email, Password FROM Accounts WHERE Email = ?";
+        $sql = "SELECT ACC_ID, Employee, FName, LName, Email, Active, Password FROM Accounts WHERE Email = ?";
         
         if($stmt = mysqli_prepare($link, $sql))
         {
@@ -76,7 +71,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
                 if(mysqli_stmt_num_rows($stmt) == 1)
                 {                    
                     // Bind result variables
-                    mysqli_stmt_bind_result($stmt, $id, $employee, $name, $surname, $username, $hashed_password);
+                    mysqli_stmt_bind_result($stmt, $id, $employee, $name,  $surname, $username, $active, $hashed_password);
                     if(mysqli_stmt_fetch($stmt))
                     {
                         if(password_verify($password, $hashed_password))
@@ -86,23 +81,35 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
                             
                             // Store data in session variables
                             $_SESSION["loggedin"] = true;
+                            $_SESSION["Active"] = $active;
                             $_SESSION["ACC_ID"] = $id;
                             $_SESSION["Email"] = $username;
                             $_SESSION["FName"] = $name;
                             $_SESSION["LName"] = $surname;
                             $_SESSION["Employee"] = $employee;
 
-                            if ($employee == 1)
+                            if ($_SESSION["Active"] == false)
                             {
-                                header("location: ../../Documents/PHP/admin-panel.php");
+                              session_destroy();
+                              $login_err = "Account Deactivate";
+                              
                             }
-                            else
-                            {
-                                header("location: ../../../PHP Scripts/Home.php");
-                            }
+                            
+
+
                             
                             
                             // Redirect user to welcome page
+
+                            if ($_SESSION["Active"] == true && $_SESSION["Employee"] == false)
+                            {
+                              header("Location: ../PHP/user-panel.php");
+                            }
+                            else if ($_SESSION["Active"] == true && $_SESSION["Employee"] == true)
+                            {
+                              header("Location: ../PHP/admin-panel.php");
+                            }
+
                             
 
                             
@@ -137,19 +144,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  
+ <link rel="apple-touch-icon" sizes="180x180" href="../../Images/Favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../../Images/Favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../../Images/Favicon/favicon-16x16.png">
+  <link rel="manifest" href="../../Images/Favicon/site.webmanifest">
   <link rel="script" href="../JS/button-script.js">
 <link rel="stylesheet" href="../CSS/boot-strap.css ">
   <link rel="stylesheet" href="../CSS/styles.css ">
-  <style>
-        .wrapper
-        { 
-            width: 360px; 
-            height:  padding: 20px;
-            margin: 0 auto;
-        }
-    </style>
-
   <script src="../JS/button-script.js" defer></script>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -167,18 +168,33 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
     <div class="navbar-links">
       <ul>
         <li><a href="../../Documents/PHP/index.php">HOME</a></li>
-        <li><a href="#">ABOUT 318</a></li>
+        <li><a href="../PHP/about.php">ABOUT 318</a></li>
       <div class="dropdown">
-        <li><a class="dropbtn" href="#">PROGRAMS</a></li>
+        <li><a class="dropbtn" href="../../Documents/PHP/programs.php">PROGRAMS</a></li>
         <div class="dropdown-content">
-      <a href="#">Link 1</a>
-      <a href="# ">Link 2</a>
-      <a href="#">Link 3</a>
+      <a href="#">Monthly Packages</a>
+      <a href="# ">Couples Nutrition</a>
+      <a href="#">Adolescent Nutrition</a>
+      <a href="#">Workshops/Seminars</a>
     </div>
-    </div> 
-        <li><a href="#">MY PLAN</a></li>
+    </div>
+    <?php
+        if(isset($_SESSION["loggedin"]) == true && $_SESSION["Active"] == true)
+        {
+          echo '<div class="dropdown">
+                <li><a class="dropbtn" href="../PHP/admin-panel.php">MY PLAN</a></li>
+                <div class="dropdown-content">
+                <a href="../PHP/account-sign-out.php">Log Out</a>
+                </div>
+                </div>';
+        }
+        else 
+        {
+         echo '<li><a href="../PHP/admin-panel.php">MY PLAN</a></li>';
+        }
+?> 
         <div class="contact">
-          <li><a href="#">CONTACT</a></li>
+          <li><a href="../PHP/contact.php">CONTACT</a></li>
         </div>
       </ul>
     </div>
@@ -191,7 +207,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
     <h1>Suttie 318</h1>
   </div>
 </div>
-<br><br><br><br>
     <div class="wrapper">
         <h2>Login</h2>
         <p>Please fill in your credentials to login.</p>
@@ -225,7 +240,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
 <footer>
   <div class="footer">
     <div class="button-format">
-    <a href="#">CONTACT ME</a>
+    <a href="../PHP/contact.php">CONTACT ME</a>
     </div>
     <br>
   <p>Copyright © 318 Nutrition<br></p>

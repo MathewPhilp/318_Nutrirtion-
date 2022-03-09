@@ -16,11 +16,12 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true)
     exit;
 }
 
-if ($_SESSION["Employee"] == false)
-{
-    header("location:  ../../Documents/PHP/user-panel.php");
-    exit;
-}
+// if ($_SESSION["Active"] == false)
+// {
+//   header("location: ../PHP/account-sign-out.php");
+//   echo 'Not logged in';
+// }
+
 
 $currentTime = date("h:i:sa");
 $time = strtotime($currentTime);
@@ -59,7 +60,7 @@ if ($currentTime >= "05:00:00am" && $currentTime < "11:59:59am")
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>318 Nutrition | Admin Panel</title>
+  <title>318 Nutrition | <?php echo htmlspecialchars($_SESSION["FName"]);?> <?php echo htmlspecialchars($_SESSION["LName"]); ?></title>
 </head>
 <body>
   <nav class="navbar">
@@ -107,7 +108,6 @@ if ($currentTime >= "05:00:00am" && $currentTime < "11:59:59am")
     <div class="column-3" id="blue">
       <h1>Total Users: <?php
         echo $link->query("SELECT COUNT(*) FROM Accounts")->fetch_column();
-        echo $_SESSION['Active'];
         ?></h1>
 
       </div>
@@ -131,10 +131,10 @@ if ($currentTime >= "05:00:00am" && $currentTime < "11:59:59am")
 
   <div class="container-icons">
     <div class="row">
-    <div onclick="location.href='../../Documents/PHP/view-accounts.php';" style="cursor: pointer;"  class="icon-button">
+    <div onclick="location.href='../../Documents/PHP/new-journal.php';" style="cursor: pointer;"  class="icon-button">
     <img class="img-icon-2"src="../../Images/Icons/users-icon.png" width="85px" height="85px">
     <br>
-    <span class="button-text"><a href="../../Documents/PHP/view-accounts.php">View Accounts</a></span>
+    <span class="button-text"><a href="../../Documents/PHP/new-journal.php">New Entry</a></span>
     </div>
     
     <div onclick="location.href='../PHP/view-journals.php';" style="cursor: pointer;"  class="icon-button">
@@ -143,11 +143,6 @@ if ($currentTime >= "05:00:00am" && $currentTime < "11:59:59am")
     <span class="button-text"><a href="../PHP/view-journals.php">View Journals</a></span>
     </div>
 
-    <div onclick="location.href='../../Documents/PHP/create-account.php';" style="cursor: pointer;"  class="icon-button">
-    <img class="img-icon-2"src="../../Images/Icons/Books-2-icon.png" width="85px" height="85px">
-    <br>
-    <span class="button-text"><a href="../../Documents/PHP/create-account.php">New Account</a></span>
-    </div>
 
     <div onclick="location.href='../../Documents/PHP/edit-profile.php';" style="cursor: pointer;"  class="icon-button">
     <img class="img-icon-2"src="../../Images/Icons/user-edit-icon.png" width="85px" height="85px">

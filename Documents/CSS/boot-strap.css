@@ -2415,6 +2415,16 @@ fieldset:disabled a.btn {
   background-color: #007bff;
   border-color: #007bff;
 }
+.btn-activate {
+  color: #fff;
+  background-color: #57c086;
+  border-color: #57c086;
+}
+.btn-deactivate {
+  color: #fff;
+  background-color: #dc3545;
+  border-color: #dc3545;
+}
 .btn-primary:hover {
   color: #fff;
   background-color: #0069d9;

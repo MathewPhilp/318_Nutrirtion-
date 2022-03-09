@@ -152,6 +152,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <link rel="apple-touch-icon" sizes="180x180" href="../../Images/Favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../../Images/Favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../../Images/Favicon/favicon-16x16.png">
+  <link rel="manifest" href="../../Images/Favicon/site.webmanifest">
   <link rel="script" href="../JS/button-script.js">
   <link rel="stylesheet" href="../CSS/boot-strap.css ">
   <link rel="stylesheet" href="../CSS/styles.css ">
@@ -160,7 +164,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>318 Nutrition | ADMIN PANEL</title>
+  <title>318 Nutrition | Create Account</title>
 </head>
 <body>
   <nav class="navbar">
@@ -173,15 +177,17 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
     <div class="navbar-links">
       <ul>
         <li><a href="../../Documents/PHP/index.php">HOME</a></li>
-        <li><a href="#">ABOUT 318</a></li>
+        <li><a href="../PHP/about.php">ABOUT 318</a></li>
       <div class="dropdown">
-        <li><a class="dropbtn" href="#">PROGRAMS</a></li>
+        <li><a class="dropbtn" href="../../Documents/PHP/programs.php">PROGRAMS</a></li>
         <div class="dropdown-content">
-      <a href="#">Link 1</a>
-      <a href="# ">Link 2</a>
-      <a href="#">Link 3</a>
+      <a href="#">Monthly Packages</a>
+      <a href="# ">Couples Nutrition</a>
+      <a href="#">Adolescent Nutrition</a>
+      <a href="#">Workshops/Seminars</a>
     </div>
     </div>
+    <li><a href="../PHP/macro-calculator.php">MACRO CALCULATOR</a></li>
     <div class="dropdown">
         <li><a class="dropbtn" href="../PHP/admin-panel.php">MY PLAN</a></li>
         <div class="dropdown-content">
@@ -189,7 +195,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
     </div>
     </div>
         <div class="contact">
-          <li><a href="#">CONTACT</a></li>
+          <li><a href="../PHP/contact.php">CONTACT</a></li>
         </div>
       </ul>
     </div>
@@ -249,7 +255,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
 <footer>
   <div class="footer">
     <div class="button-format">
-    <a href="#">CONTACT ME</a>
+    <a href="../PHP/contact.php">CONTACT ME</a>
     </div>
     <br>
   <p>Copyright © 318 Nutrition<br></p>
